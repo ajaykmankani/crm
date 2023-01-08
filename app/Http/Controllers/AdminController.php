@@ -66,4 +66,9 @@ class AdminController extends Controller
         Auth::logout();
         return redirect('/');
     }
+
+    public function leads()
+    {
+        return view('backend.lead');
+    }
 }

@@ -21,6 +21,7 @@ Route::group(['middleware' => 'auth'], function () {
     // Get the admin controller and logout routes
     Route::get('/admin', [AdminController::class, 'admin'])->name('admin');
     Route::get('logout', [AdminController::class, 'logout'])->name('logout');
+    Route::get('leads', [AdminController::class, 'leads'])->name('leads');
 });
 
 // Creates the login and forgot password routes.

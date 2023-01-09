@@ -7,11 +7,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use App\Models\User;
+use App\Models\ContactUs;
 
 class AdminController extends Controller
 {
-
-
     public function login()
     {
 
@@ -20,8 +19,6 @@ class AdminController extends Controller
 
     public function login_user(Request $req)
     {
-
-
         $req->validate([
             'email' => 'required|email',
             'password' => 'required'
@@ -29,15 +26,13 @@ class AdminController extends Controller
 
         // Redirect to the login page.
         if (Auth::attempt($req->only('email', 'password'))) {
-            return redirect('admin');
+            return redirect('/webmaster');
         } else {
             return redirect('/login')->withError('Username or Password Incorrect');
         }
     }
-
     public function register(Request $req)
     {
-
         if ($req->submit == 'submit') {
             $register = User::create([
                 'name' => $req->name,
@@ -69,6 +64,7 @@ class AdminController extends Controller
 
     public function leads()
     {
-        return view('backend.lead');
+        $leads = ContactUs::all();
+        return view('backend.lead', ['leads' => $leads]);
     }
 }

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\HomeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,13 +14,10 @@ use App\Http\Controllers\AdminController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-    // Authentication middleware.
-})->name('home');
+
 Route::group(['middleware' => 'auth'], function () {
     // Get the admin controller and logout routes
-    Route::get('/admin', [AdminController::class, 'admin'])->name('admin');
+    Route::get('/webmaster', [AdminController::class, 'admin'])->name('admin');
     Route::get('logout', [AdminController::class, 'logout'])->name('logout');
     Route::get('leads', [AdminController::class, 'leads'])->name('leads');
 });
@@ -32,3 +30,14 @@ Route::group(['middleware' => 'guest'], function () {
     Route::post('/register', [AdminController::class, 'register'])->name('register');
     Route::get('forgotPassword', [AdminController::class, 'forgotPassword'])->name('forgotPassword');
 });
+
+Route::get('/', [HomeController::class, 'home'])->name('home');
+Route::get('index', [HomeController::class, 'home']);
+Route::get('home', [HomeController::class, 'home']);
+Route::get('about', [HomeController::class, 'about']);
+Route::get('services', [HomeController::class, 'services']);
+Route::get('contact', [HomeController::class, 'contact']);
+
+Route::get('blog', [HomeController::class, 'blog'])->name('blog');
+
+Route::post('contact', [HomeController::class, 'contact_form'])->name('contact');
